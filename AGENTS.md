@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Dashboard data lives only in src/data/syntheticAdmissions.ts (Admission shape); charts in src/components/dashboard derive from it so a verified CSV can replace it.
+- Never name D3 SVG classes "grid": Tailwind's .grid ancestor class would match descendant selectors.
