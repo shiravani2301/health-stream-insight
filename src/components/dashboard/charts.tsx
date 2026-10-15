@@ -51,7 +51,7 @@ export function BarChart({ data, active, onClick }: { data: { key: string; value
     const svg = d3.select(svgRef.current!); svg.selectAll("*").remove();
     const x = d3.scaleBand().domain(data.map((d) => d.key)).range([m.l, width - m.r]).padding(0.25);
     const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d.value) || 1]).nice().range([height - m.b, m.t]);
-    svg.append("g").attr("class", "grid").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(width - m.l - m.r)).tickFormat(() => ""));
+    svg.append("g").attr("class", "gridlines").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(width - m.l - m.r)).tickFormat(() => ""));
     svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5));
     svg.append("g").attr("class", "axis").attr("transform", `translate(0,${height - m.b})`).call(d3.axisBottom(x))
       .selectAll("text").attr("transform", "rotate(-30)").style("text-anchor", "end");
@@ -98,7 +98,7 @@ export function StackedBarChart({ rows, keys, activeKey }: { rows: Record<string
     const stack = d3.stack<Record<string, number | string>>().keys(keys).value((d, k) => Number(d[k]) || 0)(rows);
     const x = d3.scaleBand().domain(rows.map((r) => String(r.department))).range([m.l, width - m.r]).padding(0.25);
     const y = d3.scaleLinear().domain([0, d3.max(stack, (s) => d3.max(s, (d) => d[1])) || 1]).nice().range([height - m.b, m.t]);
-    svg.append("g").attr("class", "grid").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(width - m.l - m.r)).tickFormat(() => ""));
+    svg.append("g").attr("class", "gridlines").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(width - m.l - m.r)).tickFormat(() => ""));
     svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5));
     svg.append("g").attr("class", "axis").attr("transform", `translate(0,${height - m.b})`).call(d3.axisBottom(x))
       .selectAll("text").attr("transform", "rotate(-30)").style("text-anchor", "end");
@@ -124,7 +124,7 @@ export function LineChart({ data }: { data: { month: Date; value: number }[] }) 
     if (!data.length) { svg.append("text").attr("x", width / 2).attr("y", height / 2).attr("text-anchor", "middle").attr("class", "donut-label").text("No data"); return; }
     const x = d3.scaleTime().domain(d3.extent(data, (d) => d.month) as [Date, Date]).range([m.l, width - m.r]);
     const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d.value) || 1]).nice().range([height - m.b, m.t]);
-    svg.append("g").attr("class", "grid").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(width - m.l - m.r)).tickFormat(() => ""));
+    svg.append("g").attr("class", "gridlines").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(width - m.l - m.r)).tickFormat(() => ""));
     svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5));
     svg.append("g").attr("class", "axis").attr("transform", `translate(0,${height - m.b})`)
       .call(d3.axisBottom<Date>(x).ticks(Math.min(12, data.length)).tickFormat(d3.timeFormat("%b")));
